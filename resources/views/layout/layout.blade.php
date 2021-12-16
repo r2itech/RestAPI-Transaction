@@ -1,49 +1,173 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta charset="utf-8">
+<title>TestCoding - {{ $title }}</title>
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
 
-    <title>{{ $title }}</title>
+<link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/bootstrap-responsive.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/font-awesome.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/pages/dashboard.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/pages/signin.css') }}">
+
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
 </head>
-
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </a>
+        <a class="brand" href="{{ url('/') }}">TestCoding - Qtasnim - Dede Rian </a>
+      <div class="nav-collapse">
+        <ul class="nav pull-right">
+        @if($title == 'Login' || $title == 'Register' || $title == 'Forbidden')
+			<li class=""><a href="{{ url('/') }}" class=""><i class="icon-chevron-left"></i> Back to Homepage</a></li>
+        @else
+          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> Account <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                @if(auth()->user() != null)
+                <li><a href="javascript:;"><i class="icon-user"></i> Profile</a></li>
+                <li><a href="{{ url('/logout') }}"><i class="icon-signout"></i> Logout</a></li>
+                @else
+                <li><a href="{{ url('/login/' .Crypt::encrypt('login')) }}"><i class="icon-signin"></i> Login</a></li>
+                <li><a href="{{ url('/register/' .Crypt::encrypt('register')) }}"><i class="icon-edit"></i> Register</a></li>
+                @endif
+            </ul>
+          </li>
+        @endif
+        </ul>
+      </div>
+      <!--/.nav-collapse --> 
+    </div>
+    <!-- /container --> 
+  </div>
+  <!-- /navbar-inner --> 
+</div>
+@if($title != 'Login' && $title != 'Register' && $title != 'Forbidden')
+<!-- /navbar -->
+<div class="subnavbar">
+  <div class="subnavbar-inner">
+    <div class="container">
+      <ul class="mainnav">
+        @if($title == 'Home')
+        <li class="active">
+        @else
+        <li>
+        @endif
+            <a href="{{ url('/') }}"><i class="icon-home"></i><span>Home</span></a>
+        </li>
+        @if(auth()->user() != null)
+            @if(auth()->user()->level == 1)
+            <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user-md"></i><span>Admin <i class="icon-arrow-down"></i></span> <b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li><a href="{{ url('/') }}"><i class="icon-list"></i> Transaksi</a></li>
+                <li><a href="{{ url('/') }}"><i class="icon-edit"></i> Barang</a></li>
+                <li><a href="{{ url('/') }}"><i class="icon-edit"></i> Jenis Barang</a></li>
+                <li><a href="{{ url('/') }}"><i class="icon-user"></i> Users</a></li>
+            </ul>
+            </li>
+            @endif
+            @if(auth()->user()->level == 1 || auth()->user()->level == 2)
+                @if($title == 'API')
+                <li class="active">
+                @else
+                <li>
+                @endif
+                    <a href="{{ url('/') }}"><i class="icon-cogs"></i><span>API</span></a>
+                </li>
+            @endif
+            <li>
+                <a href="{{ url('/logout') }}"><i class="icon-signout"></i><span>Logout</span></a>
+            </li>
+        @endif
+        @if(auth()->user() == null)
+        <li>
+            <a href="{{ url('/login/' .Crypt::encrypt('login')) }}"><i class="icon-signin"></i><span>Login</span></a>
+        </li>
+        @endif
+      </ul>
+    </div>
+    <!-- /container --> 
+  </div>
+  <!-- /subnavbar-inner --> 
+</div>
+<!-- /subnavbar -->
+@endif
+<div class="main">
+  <div class="main-inner">
+      @yield('content')
+    <!-- /container --> 
+  </div>
+  <!-- /main-inner --> 
+</div>
+<!-- /main -->
+
+<div class="extra">
+    <div class="extra-inner">
         <div class="container">
-            <a class="navbar-brand" href="{{ url('/') }}">Test-Coding</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <a class="nav-link active" href="{{url('/')}}">Home</a>
-                    <a class="nav-link" href="{{url('/about')}}">Jenis Barang</a>
-                    <a class="nav-link" href="{{url('/mahasiswa')}}">Barang</a>
-                    <a class="nav-link" href="{{url('/students')}}">Transaksi</a>
+            <div class="row">
+                <div class="span3">
+                    <h4>Me</h4>
+                    <ul>
+                        <li><a target="_blank" href="https://www.linkedin.com/in/dede-rian/"><i class="icon-linkedin-sign"></i> Linked In</a></li>
+                        <li><a target="_blank" href="https://github.com/r2itech"><i class="icon-github-sign"></i> Github</a></li>
+                    </ul>
+                </div>
+                <div class="span3">
+                    <h4>PT Qtasnim Digital Teknologi</h4>
+                    <ul>
+                        <li><a target="_blank" href="https://qtasnim.com/"><i class="icon-globe"></i> Site</a></li>
+                    </ul>
                 </div>
             </div>
+            <!-- /row--> 
         </div>
-    </nav>
+        <!-- /container --> 
+    </div>
+    <!-- /extra-inner --> 
+</div>
+<!-- /extra -->
 
-    @yield('content')
-
+<div class="footer">
+    <div class="footer-inner">
+        <div class="container">
+            <div class="row">
+                <div class="span12">
+                &copy; 2021 <a href="#">TestCoding - Qtasnim</a>
+                </div>
+                <!-- /span12 --> 
+            </div>
+            <!-- /row --> 
+        </div>
+        <!-- /container --> 
+    </div>
+    <!-- /footer-inner --> 
+</div>
+<!-- /footer -->
 </body>
 
-<!-- Optional JavaScript; choose one of the two! -->
-
-    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
-
-    <!-- Option 2: jQuery, Popper.js, and Bootstrap JS
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
-    -->
+<!-- Le javascript
+================================================== --> 
+<!-- Placed at the end of the document so the pages load faster --> 
+<script src="{{ asset('assets/js/jquery-1.7.2.min.js') }}"></script> 
+<script src="{{ asset('assets/js/excanvas.min.js') }}"></script> 
+<script src="{{ asset('assets/js/chart.min.js" type="text/javascript') }}"></script> 
+<script src="{{ asset('assets/js/bootstrap.js') }}"></script>
+<script src="{{ asset('assets/js/full-calendar/fullcalendar.min.js" language="javascript" type="text/javascript') }}"></script>
+<script src="{{ asset('assets/js/signin.js') }}"></script>
+<script src="{{ asset('assets/js/base.js') }}"></script>
 
 </html>

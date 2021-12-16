@@ -21,10 +21,4 @@ class Transaksi extends Model
     {
         return $this->belongsTo('App\Models\Barang', 'id_barang', 'id');
     }
-
-    public function jumlahTransaksi()
-    {
-        $data = $this->hasOne($this, 'id_barang','id')->selectRaw('id_barang, count(*) as jumlah')->groupBy('id_barang');
-        return $data;
-    }
 }

@@ -16,11 +16,28 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function(){
 //     return view('welcome');
 // });
+
+//Route Home
 Route::get('/', 'App\Http\Controllers\CrudController@home');
 
-Route::get('/about', 'App\Http\Controllers\PagesController@about');
+//Foute Forbidden
+Route::get('/forbidden/{id}', 'App\Http\Controllers\PagesController@forbidden')->name('forbidden');
 
-Route::get('/mahasiswa', 'App\Http\Controllers\MahasiswaController@index');
+//Route Login
+Route::get('/login/{id}', 'App\Http\Controllers\PagesController@pages');
+Route::post('/login', 'App\Http\Controllers\CrudController@login');
 
-Route::resource('students', 'App\Http\Controllers\StudentsController');
+//Route Register
+Route::get('/register/{id}', 'App\Http\Controllers\PagesController@pages');
 
+//Middleware Admin
+Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
+
+});
+
+//Middleware Admin and Users
+Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
+    
+    //Route Logout
+    Route::get('/logout', 'App\Http\Controllers\CrudController@logout');
+});

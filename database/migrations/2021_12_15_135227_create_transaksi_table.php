@@ -16,7 +16,7 @@ class CreateTransaksiTable extends Migration
         Schema::create('transaksi', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('id_barang');
-            $table->dateTime('tanggal_transaksi');
+            $table->date('tanggal_transaksi');
             $table->timestamps();
         });
     }
