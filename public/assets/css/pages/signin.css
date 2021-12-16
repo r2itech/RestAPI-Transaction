@@ -47,7 +47,8 @@ body{ background: url(../../img/body-bg.png); color:#838383; font: 13px/1.7em 'O
 	color: #8e8d8d;
 	padding: 11px 15px 10px 50px;
 	background-color: #fdfdfd;
-	width: 255px;
+	width: 320px;
+	height: 40px;
 	display: block;
 	margin: 0;
 	box-shadow: inset 2px 2px 4px #f1f1f1;

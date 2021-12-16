@@ -2,7 +2,7 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-9">
+        <div class="col-12">
             @if(session('warning'))
             <div class="alert alert-danger">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -17,8 +17,11 @@
         </div>
         <div class="col-12">
             <div class="row">
-                <div class="col-12 col-md-12">
-                    <h2>Daftar Transaksi</h2><br>
+                <div class="col-11 col-md-11">
+                    <h2>Data Transaksi</h2><br>
+                </div>
+                <div class="col-1 col-md-1">
+                    <a href="{{ url('/transaksi/create/' .Crypt::encrypt('transaksi')) }}" class="btn btn-primary btn-small"><i class="icon-plus"></i> Tambah</a>
                 </div>
             </div>
             <table class="table table-striped table-bordered" id="transaksi">
@@ -28,8 +31,8 @@
                         <th>Nama Barang</th>
                         <th>Jenis Barang</th>
                         <th>Tanggal Transaksi</th>
-                        <th>Jumlah Terjual</th>
                         <th>Stok</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -48,7 +51,7 @@
             processing : true,
             serverSide : true,
             ajax : {
-                url : "{{ url('/') }}",
+                url : "{{ url('/transaksi') }}",
                 type : 'GET'
             },
             columns: [
@@ -64,11 +67,16 @@
                 {data:'nama_barang',name:'nama_barang'},
                 {data:'jenis_barang',name:'jenis_barang'},
                 {data:'tgl_transaksi',name:'tgl_transaksi'},
-                {data:'jumlah',name:'jumlah'},
                 {data:'stok',name:'stok'},
+                {data:'aksi',name:'aksi'},
             ],
             order: [[3,'desc']]
         });
     });
+
+    function myFunction() {
+      if(!confirm("Apakah anda serius akan menghapus data transaksi ini?"))
+      event.preventDefault();
+  }
 </script>
 @stop

@@ -7,6 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap.min.css">
+
 <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/css/bootstrap-responsive.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600') }}">
@@ -71,12 +74,18 @@
         </li>
         @if(auth()->user() != null)
             @if(auth()->user()->level == 1)
-            <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user-md"></i><span>Admin <i class="icon-arrow-down"></i></span> <b class="caret"></b></a>
+            @if($title == 'Transaksi' || $title == 'Barang' || $title == 'Jenis Barang')
+            <li class="dropdown active">
+            @else
+            <li class="dropdown">
+            @endif
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="icon-user-md"></i><span>Admin <i class="icon-arrow-down"></i></span><b class="caret"></b>
+                </a>
             <ul class="dropdown-menu">
-                <li><a href="{{ url('/') }}"><i class="icon-list"></i> Transaksi</a></li>
-                <li><a href="{{ url('/') }}"><i class="icon-edit"></i> Barang</a></li>
-                <li><a href="{{ url('/') }}"><i class="icon-edit"></i> Jenis Barang</a></li>
-                <li><a href="{{ url('/') }}"><i class="icon-user"></i> Users</a></li>
+                <li><a href="{{ url('/transaksi') }}"><i class="icon-list"></i> Transaksi</a></li>
+                <li><a href="{{ url('/barang') }}"><i class="icon-edit"></i> Barang</a></li>
+                <li><a href="{{ url('/jenisBarang') }}"><i class="icon-edit"></i> Jenis Barang</a></li>
             </ul>
             </li>
             @endif
@@ -158,16 +167,34 @@
 </div>
 <!-- /footer -->
 </body>
-
+<!-- Modal -->
+<div id="add" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3 id="myModalLabel">Thank you for visiting EGrappler.com</h3>
+    </div>
+    <div class="modal-body">
+      <p>One fine body…</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+      <button class="btn btn-primary">Save changes</button>
+    </div>
+</div>
 <!-- Le javascript
 ================================================== --> 
 <!-- Placed at the end of the document so the pages load faster --> 
-<script src="{{ asset('assets/js/jquery-1.7.2.min.js') }}"></script> 
-<script src="{{ asset('assets/js/excanvas.min.js') }}"></script> 
-<script src="{{ asset('assets/js/chart.min.js" type="text/javascript') }}"></script> 
-<script src="{{ asset('assets/js/bootstrap.js') }}"></script>
-<script src="{{ asset('assets/js/full-calendar/fullcalendar.min.js" language="javascript" type="text/javascript') }}"></script>
-<script src="{{ asset('assets/js/signin.js') }}"></script>
-<script src="{{ asset('assets/js/base.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/jquery-1.7.2.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/excanvas.min.js') }}"></script> 
+<script type="text/javascript" src="{{ asset('assets/js/chart.min.js') }}"></script> 
+<script type="text/javascript" src="{{ asset('assets/js/bootstrap.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/signin.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/base.js') }}"></script>
+
+<!-- <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script> -->
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap.min.js"></script>
+
+@yield('datatable')
 
 </html>

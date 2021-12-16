@@ -32,7 +32,29 @@ Route::get('/register/{id}', 'App\Http\Controllers\PagesController@pages');
 
 //Middleware Admin
 Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
+    //Route Transaksi
+    Route::get('/transaksi', 'App\Http\Controllers\CrudController@transaksi');
+    Route::get('/transaksi/create/{id}', 'App\Http\Controllers\PagesController@add');
+    Route::post('/transaksi/create', 'App\Http\Controllers\CrudController@storeTransaksi');
+    Route::get('/transaksi/update/{id}/{id1}', 'App\Http\Controllers\PagesController@edit');
+    Route::post('/transaksi/update/{id}', 'App\Http\Controllers\CrudController@updateTransaksi');
+    Route::get('/transaksi/delete/{id}', 'App\Http\Controllers\CrudController@deleteTransaksi');
 
+    //Route Barang
+    Route::get('/barang', 'App\Http\Controllers\CrudController@barang');
+    Route::get('/barang/create/{id}', 'App\Http\Controllers\PagesController@add');
+    Route::post('/barang/create', 'App\Http\Controllers\CrudController@storeBarang');
+    Route::get('/barang/update/{id}/{id1}', 'App\Http\Controllers\PagesController@edit');
+    Route::post('/barang/update/{id}', 'App\Http\Controllers\CrudController@updateBarang');
+    Route::get('/barang/delete/{id}', 'App\Http\Controllers\CrudController@deleteBarang');
+
+    //Route Jenis Barang
+    Route::get('/jenisBarang', 'App\Http\Controllers\CrudController@jenisBarang');
+    Route::get('/jenisBarang/create/{id}', 'App\Http\Controllers\PagesController@add');
+    Route::post('/jenisBarang/create', 'App\Http\Controllers\CrudController@storeJenisBarang');
+    Route::get('/jenisBarang/update/{id}/{id1}', 'App\Http\Controllers\PagesController@edit');
+    Route::post('/jenisBarang/update/{id}', 'App\Http\Controllers\CrudController@updateJenisBarang');
+    Route::get('/jenisBarang/delete/{id}', 'App\Http\Controllers\CrudController@deleteJenisBarang');
 });
 
 //Middleware Admin and Users
