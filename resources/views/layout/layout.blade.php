@@ -42,7 +42,7 @@
           <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> Account <b class="caret"></b></a>
             <ul class="dropdown-menu">
                 @if(auth()->user() != null)
-                <li><a href="javascript:;"><i class="icon-user"></i> Profile</a></li>
+                <li><a href="{{ url('/profil/' .Crypt::encrypt('profil') .'/' .Crypt::encrypt(auth()->user()->id)) }}"><i class="icon-user"></i> Profile</a></li>
                 <li><a href="{{ url('/logout') }}"><i class="icon-signout"></i> Logout</a></li>
                 @else
                 <li><a href="{{ url('/login/' .Crypt::encrypt('login')) }}"><i class="icon-signin"></i> Login</a></li>
@@ -95,7 +95,7 @@
                 @else
                 <li>
                 @endif
-                    <a href="{{ url('/') }}"><i class="icon-cogs"></i><span>API</span></a>
+                    <a href="{{ url('/api/' .Crypt::encrypt('api')) }}"><i class="icon-cogs"></i><span>API</span></a>
                 </li>
             @endif
             <li>

@@ -29,6 +29,10 @@ Route::post('/login', 'App\Http\Controllers\CrudController@login');
 
 //Route Register
 Route::get('/register/{id}', 'App\Http\Controllers\PagesController@pages');
+Route::post('/register', 'App\Http\Controllers\CrudController@storeRegistrasi');
+
+//Route Compare
+Route::get('/compare/{id}','App\Http\Controllers\CrudController@compare');
 
 //Middleware Admin
 Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
@@ -59,7 +63,13 @@ Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
 
 //Middleware Admin and Users
 Route::group(['middleware' => ['auth', 'ceklevel:1,2']], function () {
-    
+    //Route Profil
+    Route::get('/profil/{id}/{id1}', 'App\Http\Controllers\PagesController@edit');
+    Route::post('/profil/update/{id}', 'App\Http\Controllers\CrudController@updateProfil');
+
+    //Route User / api
+    Route::get('/api/{id}', 'App\Http\Controllers\CrudController@api');
+
     //Route Logout
     Route::get('/logout', 'App\Http\Controllers\CrudController@logout');
 });

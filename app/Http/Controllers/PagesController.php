@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\CrudController;
 use App\Models\Transaksi;
+use App\Models\User;
 use App\Models\Barang;
 use App\Models\JenisBarang;
 use Illuminate\Support\Facades\Crypt;
@@ -70,6 +71,11 @@ class PagesController extends Controller
         $url = '';
         $data = '';
         switch($id_page){
+            case 'profil' : 
+                $title = 'Profil';
+                $url = 'profil';
+                $data = ''; 
+                $data1 = User::where('id', $id_data)->first(); break;
             case 'transaksi' : 
                 $title = 'Transaksi';
                 $url = 'admin.editTransaksi';

@@ -9,7 +9,10 @@ use App\Models\User;
 use App\Models\JenisBarang;
 use App\Models\Barang;
 use App\Models\Transaksi;
+use App\Models\Algoritma;
 use Illuminate\Support\Facades\Crypt;
+use App\Http\Requests\ChangePasswordRequest;
+use Illuminate\Support\Facades\Hash;
 
 class CrudController extends Controller
 {
@@ -23,14 +26,14 @@ class CrudController extends Controller
         $user = User::where('email', $r->email)->first();
 
         if (!$user) {
-            return redirect('/login')->with('warning', 'Email not found!');
+            return redirect('/login/' .Crypt::encrypt('login'))->with('warning', 'Email not found!');
         }
 
         if (Auth::attempt($r->only('email', 'password'))) {
             return redirect('/');
         }
 
-        return redirect('/login')->with('warning', 'Password incorrect!!!');
+        return redirect('/login/' .Crypt::encrypt('login'))->with('warning', 'Password incorrect!!!');
     }
 
     public function logout()
@@ -148,6 +151,31 @@ class CrudController extends Controller
         return view('admin.jenisBarang', compact('title'));
     }
 
+    public function api(Request $r, $id)
+    {
+        $title = 'API';
+        if(auth()->user()->level == 1){
+            $user = User::where('level', 2)->get();
+          
+            if($r->ajax()){
+                return datatables()->of($user)
+                ->addColumn('aksi', function($u){
+                    return '<a href="user/update/' .Crypt::encrypt('user') .'/' .Crypt::encrypt($u->id) .'/" class="btn btn-info btn-mini"><i class="icon-edit"></i></a>
+                            <a href="user/delete/' .Crypt::encrypt($u->id) .'/" onclick="return myFunction();" class="btn btn-danger btn-mini"><i class="icon-trash"></i></a>';
+                })
+                ->rawColumns(['aksi'])
+                ->toJson();
+            }
+
+            return view('admin.user', compact('title'));
+
+        } else{
+            $algo = new Algoritma();
+            $token = $algo->encrypt(auth()->user()->api_token);
+            return view('api', compact('title','token'));
+        }
+    }
+
     /**
      * EndRegion READ
      */
@@ -192,6 +220,28 @@ class CrudController extends Controller
         ]);
         JenisBarang::create(['jenis_barang' => $r->jenis_barang]);
         return redirect('/jenisBarang')->with('info', 'Data jenis barang berhasil ditambahkan');
+    }
+
+    public function storeRegistrasi(Request $r)
+    {
+        $r->validate([
+            'email' => 'unique:users|email:rfc,dns',
+            'password' => 'min:5|max:16|required_with:confirm_password|same:confirm_password',
+            'confirm_password' => 'min:5|max:16'
+        ]);
+
+        $api_token = mt_rand(0, 999999999);
+
+        $data = [
+            'name' => $r->name,
+            'email' => $r->email,
+            'password' => bcrypt($r->password),
+            'level' => 2,
+            'api_token' => $api_token
+        ];
+
+        User::create($data);
+        return redirect('/login/' .Crypt::encrypt('login'))->with('info', 'Regsiter Success. Please SignIn!');
     }
 
     /**
@@ -240,6 +290,27 @@ class CrudController extends Controller
         $jenis_barang->update(['jenis_barang' => $r->jenis_barang]);
 
         return redirect('/jenisBarang')->with('info', 'Data jenis barang berhasil diperbaharui');
+    }
+
+    public function updateProfil(Request $r, $id, ChangePasswordRequest $request)
+    {
+        $r->validate([
+            'password' => 'min:5|max:16|required_with:confirm_password|same:confirm_password',
+            'confirm_password' => 'min:5|max:16'
+        ]);
+
+        $old_pass = auth()->user()->password;
+        
+        if (Hash::check($request->input('old_password'), $old_pass)) {
+            $id_user = Crypt::decrypt($id);
+            $user = User::find($id_user);
+            $user->password = Hash::make($request->input('password'));
+            if ($user->save()) {
+                return back()->with('info', 'Password Berhasil Diperbaharui');
+            }
+        } else {
+            return back()->with('warning', 'Edit Password Gagal!, Password Sebelumnya Salah');
+        }
     }
 
     /**
@@ -292,5 +363,32 @@ class CrudController extends Controller
 
     /**
      * EndRegion DELETE
+     */
+
+    /**
+     * Region COMPARE
+     */
+
+    public function compare(Request $r)
+    {
+        $title = 'Home';
+
+        // $transaksi = Transaksi::groupBy('tanggal_transaksi')->groupBy('id_barang')->groupBy('id_jenis_barang')
+        // ->select('tanggal_transaksi','id_barang','id_jenis_barang', DB::raw('count(*) as jumlah'))
+        // ->get();
+
+        $data = Barang::groupBy('id_jenis_barang')->withCount('transaksi')
+        ->get();
+
+        // dd($data);
+
+        foreach($data as $d){
+            echo $d->jenisBarang->jenis_barang .'->' .$d->nama_barang .' : ';
+            echo $d->transaksi_count .' <br>';
+        }
+    }
+
+    /**
+     * EndRegion COMPARE
      */
 }
