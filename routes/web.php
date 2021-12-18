@@ -60,6 +60,9 @@ Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
     Route::get('/jenisBarang/update/{id}/{id1}', 'App\Http\Controllers\PagesController@edit');
     Route::post('/jenisBarang/update/{id}', 'App\Http\Controllers\CrudController@updateJenisBarang');
     Route::get('/jenisBarang/delete/{id}', 'App\Http\Controllers\CrudController@deleteJenisBarang');
+
+    //Route User / api
+    Route::get('/api/user/delete/{id}', 'App\Http\Controllers\CrudController@deleteUser');
 });
 
 //Middleware Admin and Users

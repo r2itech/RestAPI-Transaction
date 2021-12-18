@@ -161,8 +161,7 @@ class CrudController extends Controller
             if($r->ajax()){
                 return datatables()->of($user)
                 ->addColumn('aksi', function($u){
-                    return '<a href="user/update/' .Crypt::encrypt('user') .'/' .Crypt::encrypt($u->id) .'/" class="btn btn-info btn-mini"><i class="icon-edit"></i></a>
-                            <a href="user/delete/' .Crypt::encrypt($u->id) .'/" onclick="return myFunction();" class="btn btn-danger btn-mini"><i class="icon-trash"></i></a>';
+                    return '<a href="user/delete/' .Crypt::encrypt($u->id) .'/" onclick="return myFunction();" class="btn btn-danger btn-mini"><i class="icon-trash"></i></a>';
                 })
                 ->rawColumns(['aksi'])
                 ->toJson();
@@ -384,6 +383,17 @@ class CrudController extends Controller
         }
     }
 
+    public function deleteUser($id)
+    {
+        $id_user = Crypt::decrypt($id);
+        $user = User::find($id_user);
+        $nama = $user->name;
+        $email = $user->email;
+
+        $user->delete($user);
+        return back()->with('info', 'Akun atas nama: ' .$nama .'. Dengan email: ' .$email .' berhasil dihapus');
+    }
+
     /**
      * EndRegion DELETE
      */
@@ -395,7 +405,7 @@ class CrudController extends Controller
     public function compare(Request $r)
     {
         date_default_timezone_set('Asia/Jakarta');
-        
+
         $title = 'Home';
         
         $order = 'ASC';
