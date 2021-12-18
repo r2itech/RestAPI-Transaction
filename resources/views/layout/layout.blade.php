@@ -196,5 +196,6 @@
 <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap.min.js"></script>
 
 @yield('datatable')
+@yield('copy')
 
 </html>
