@@ -21,4 +21,9 @@ class Transaksi extends Model
     {
         return $this->belongsTo('App\Models\Barang', 'id_barang', 'id');
     }
+
+    public function compare()
+    {
+        return $this->hasMany('App\Models\Compare', 'id_transaksi', 'id');
+    }
 }

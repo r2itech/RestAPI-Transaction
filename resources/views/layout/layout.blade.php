@@ -33,7 +33,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </a>
-        <a class="brand" href="{{ url('/') }}">TestCoding - Qtasnim - Dede Rian </a>
+        <a class="brand" href="{{ url('/') }}">TestCoding - Qtasnim </a>
       <div class="nav-collapse">
         <ul class="nav pull-right">
         @if($title == 'Login' || $title == 'Register' || $title == 'Forbidden')

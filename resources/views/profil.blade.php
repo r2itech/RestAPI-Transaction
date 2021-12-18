@@ -24,7 +24,7 @@
 					<input type="text"value="{{ $data1->name }}" class="login" disabled />
 				</div>
 				<div class="field">
-					<input type="password" id="old_password" name="old_password" placeholder="old Password" class="login" maxlength="16" required oninvalid="this.setCustomValidity('Insert old_password Here!')" oninput="this.setCustomValidity('')" />
+					<input type="password" id="old_password" name="old_password" placeholder="old Password" class="login" maxlength="16" required oninvalid="this.setCustomValidity('Insert Old Password Here!')" oninput="this.setCustomValidity('')" />
 					@error('old_password')<div class="invallid-feedback text-danger">*{{$message}}</div> @enderror
 				</div>
                 <div class="field">

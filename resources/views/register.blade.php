@@ -27,8 +27,7 @@
                 <span class="login-checkbox">
                     <a href="{{ url('/login/' .Crypt::encrypt('login')) }}" title="Resgister"><i class="icon-info-sign"></i> Already have an account? Login now</a>
 				</span>	
-				<button type="submit" class="button btn btn-primary btn-large">Submit</button>
-				
+				<button type="submit" class="button btn btn-primary btn-large">Submit</button>	
 			</div> <!-- .actions -->
 			
 		</form>

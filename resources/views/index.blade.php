@@ -18,7 +18,7 @@
         <div class="col-12">
             <div class="row">
                 <div class="col-11 col-md-11">
-                    <h2>Daftar Barang</h2><br>
+                    <h2>Daftar Transaksi</h2><br>
                 </div>
                 <div class="col-1 col-md-1">
                     <a href="{{ url('/compare/' .Crypt::encrypt('compare')) }}" class="btn btn-warning btn-large"><i class="icon-th-list"></i> Compare</a>
@@ -70,7 +70,16 @@
                 {data:'jumlah',name:'jumlah'},
                 {data:'stok',name:'stok'},
             ],
-            order: [[3,'desc']]
+            order: [[3,'desc']],
+
+            searching  : true,
+            paging : true,
+            // ordering : true,
+            info : true,
+            "aoColumnDefs": [
+                { 'bSortable': false, 'aTargets': [ 2, 4, 5 ] }
+            ]
+
         });
     });
 </script>

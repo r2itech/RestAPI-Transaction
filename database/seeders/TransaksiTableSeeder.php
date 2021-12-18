@@ -113,6 +113,6 @@ class TransaksiTableSeeder extends Seeder
 
         DB::table('jenis-barang')->insert($jenis_barang);
         DB::table('barang')->insert($barang);
-        DB::table('transaksi')->insert($transaksi);
+        // DB::table('transaksi')->insert($transaksi);
     }
 }

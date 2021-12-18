@@ -6,7 +6,7 @@
 	      	<div class="widget">
 	      	    <div class="widget-content">
 					<div class="widget-header">
-						<i class="icon-pushpin"></i>
+						<i class="icon-cog"></i>
 						<h3>Application Programming Interface</h3>
 					</div> <!-- /widget-header -->
 					<div class="widget-content">

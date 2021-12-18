@@ -33,6 +33,7 @@ Route::post('/register', 'App\Http\Controllers\CrudController@storeRegistrasi');
 
 //Route Compare
 Route::get('/compare/{id}','App\Http\Controllers\CrudController@compare');
+Route::post('/compare/{id}','App\Http\Controllers\CrudController@compare');
 
 //Middleware Admin
 Route::group(['middleware' => ['auth', 'ceklevel:1']], function () {
