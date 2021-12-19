@@ -42,6 +42,11 @@
         </div>
     </div>
 </div>
+<?php
+    for($i=1; $i<=9; $i++){
+        echo '<br>';
+    }
+?>
 @endsection
 
 @section('datatable')

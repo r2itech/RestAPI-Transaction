@@ -32,18 +32,12 @@ class ApiTransaksiController extends Controller {
                 ];
             }
 
-            $user = [
-                'nama' => $users->name,
-                'email' => $users->email
-            ];
-
             return $this->successJSON([
-                'user' => $user,
                 'transaksi' => $records
             ]);
         }
         else{
-            return $this->errorJSON('Who are you? You not allowed to get data from here!');
+            return $this->errorJSON('You are not allowed to get data from here!');
         }
     }
 
@@ -66,18 +60,12 @@ class ApiTransaksiController extends Controller {
                 ];
             }
 
-            $user = [
-                'nama' => $users->name,
-                'email' => $users->email
-            ];
-
             return $this->successJSON([
-                'user' => $user,
                 'barang' => $records
             ]);
         }
         else{
-            return $this->errorJSON('Who are you? You not allowed to get data from here!');
+            return $this->errorJSON('You are not allowed to get data from here!');
         }
     }
 
@@ -98,18 +86,12 @@ class ApiTransaksiController extends Controller {
                 ];
             }
 
-            $user = [
-                'nama' => $users->name,
-                'email' => $users->email
-            ];
-
             return $this->successJSON([
-                'user' => $user,
                 'jenisBarang' => $records
             ]);
         }
         else{
-            return $this->errorJSON('Who are you? You not allowed to get data from here!');
+            return $this->errorJSON('You are not allowed to get data from here!');
         }
     }
 }
