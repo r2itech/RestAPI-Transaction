@@ -13,6 +13,7 @@ class Transaksi extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
+        'id_jenis_barang',
         'id_barang',
         'tanggal_transaksi'
     ];
@@ -22,8 +23,8 @@ class Transaksi extends Model
         return $this->belongsTo('App\Models\Barang', 'id_barang', 'id');
     }
 
-    public function compare()
+    public function jenisBarang()
     {
-        return $this->hasMany('App\Models\Compare', 'id_transaksi', 'id');
+        return $this->belongsTo('App\Models\JenisBarang', 'id_jenis_barang', 'id');
     }
 }

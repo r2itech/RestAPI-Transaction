@@ -45,17 +45,21 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($jenis_barang as $key => $j)
+                    @foreach($transaksi as $t)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $j->jenis_barang }}</td>
-                        <td>
-                            <?php
-                                $jum = (!empty($data[$key])) ? $data[$key]->jumlah : 0;
-                                echo $jum;
-                            ?>
-                        </td>    
+                        <td>{{ $t->jenisBarang->jenis_barang }}</td>
+                        <td>{{ $t->jumlah }}</td>    
                     </tr>
+                    @endforeach
+                    <?php $num = count($transaksi)+1; ?>
+                    @foreach($jenis_barang as $j)
+                    <tr>
+                        <td>{{ $num }}</td>
+                        <td>{{ $j->jenis_barang }}</td>
+                        <td>0</td>    
+                    </tr>
+                    <?php $num++; ?>
                     @endforeach
                 </tbody>
             </table>

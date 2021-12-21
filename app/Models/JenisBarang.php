@@ -23,8 +23,8 @@ class JenisBarang extends Model
         return $this->hasMany('App\Models\Barang', 'id_jenis_barang', 'id');
     }
 
-    public function compare()
+    public function transaksi()
     {
-        return $this->hasMany('App\Models\Compare', 'id_jenis_barang', 'id');
+        return $this->hasMany('App\Models\Transaksi', 'id_jenis_barang', 'id');
     }
 }
