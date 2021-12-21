@@ -388,8 +388,8 @@ class CrudController extends Controller
 
         $title = 'Home';
 
-        $from = date('Y-m-d', strtotime(now()));
-        $until = date('Y-m-d', strtotime(now()));
+        $from = $r->from;
+        $until = $r->until;
         
         $data = '';
         if($r->from == null){
@@ -400,7 +400,7 @@ class CrudController extends Controller
         } else{
             $transaksi = Transaksi::groupBy('id_jenis_barang')
             ->select('id_jenis_barang','id_barang','tanggal_transaksi', DB::raw('count(*) as jumlah'))
-            ->whereBetween('tanggal_transaksi', [$r->from, $r->until])
+            ->whereBetween('tanggal_transaksi', [$from, $until])
             ->orderBy('jumlah', 'DESC')
             ->get();
         }
@@ -412,16 +412,6 @@ class CrudController extends Controller
 
         $jenis_barang = JenisBarang::select('id','jenis_barang')
         ->whereNotIn('id', $con)->get();
-        
-        // if($r->ajax()){
-        //     return datatables()->of($jenis_barang)
-        //     ->addColumn('jumlah', function($t){
-        //         $jum = (empty($data[$t])) ? $data[$t]->jumlah : 0;
-        //         return $jum;
-        //     })
-        //     ->rawColumns(['jumlah'])
-        //     ->make(true);
-        // }
 
         return view('compare', compact('title','jenis_barang','transaksi','from','until'));
     }
