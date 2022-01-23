@@ -33,7 +33,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </a>
-        <a class="brand" href="{{ url('/') }}">TestCoding - Qtasnim </a>
+        <a class="brand" href="{{ url('/') }}">TestCoding </a>
       <div class="nav-collapse">
         <ul class="nav pull-right">
         @if($title == 'Login' || $title == 'Register' || $title == 'Forbidden')
@@ -155,7 +155,7 @@
         <div class="container">
             <div class="row">
                 <div class="span12">
-                &copy; 2021 <a href="#">TestCoding - Qtasnim</a>
+                &copy; 2021 <a href="#">TestCoding - Dede Rian</a>
                 </div>
                 <!-- /span12 --> 
             </div>
